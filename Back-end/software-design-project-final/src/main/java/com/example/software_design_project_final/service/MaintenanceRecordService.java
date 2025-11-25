@@ -26,6 +26,7 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -144,10 +145,11 @@ public class MaintenanceRecordService {
             if (!existingRecord.getTransformer().getId().equals(transformer.getId())) {
                 throw new IllegalArgumentException("Transformer mismatch for maintenance record update");
             }
-            if (request.getVersion() != null && !request.getVersion().equals(existingRecord.getVersion())) {
+            int currentVersion = existingRecord.getVersion() != null ? existingRecord.getVersion() : 1;
+            if (request.getVersion() != null && !request.getVersion().equals(currentVersion)) {
                 throw new IllegalArgumentException("Maintenance record has been updated by another user");
             }
-            nextVersion = existingRecord.getVersion() + 1;
+            nextVersion = currentVersion + 1;
         }
 
         MaintenanceRecord record = new MaintenanceRecord();
@@ -158,10 +160,14 @@ public class MaintenanceRecordService {
 
         applyEngineerFields(record, request.getEngineerFields(), inspection);
 
-        Map<Integer, String> noteMap = request.getAnomalyNotes().entrySet().stream()
-            .map(entry -> Map.entry(safeParseInt(entry.getKey()), trimToNull(entry.getValue())))
-            .filter(entry -> entry.getKey() != null && StringUtils.hasText(entry.getValue()))
-            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (left, right) -> right));
+        Map<Integer, String> noteMap = new HashMap<>();
+        request.getAnomalyNotes().forEach((key, value) -> {
+            Integer annotationId = safeParseInt(key);
+            String noteValue = trimToNull(value);
+            if (annotationId != null && StringUtils.hasText(noteValue)) {
+                noteMap.put(annotationId, noteValue);
+            }
+        });
 
         record.getAnomalyNotes().clear();
         noteMap.forEach((annotationId, noteValue) -> {
