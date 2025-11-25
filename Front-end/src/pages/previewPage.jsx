@@ -14,7 +14,7 @@ const FRAME_RADIUS = 16;
 const SYNC_ZOOM_SCALE = 2.2;
 const WEATHER_OPTIONS = ["SUNNY", "RAINY", "CLOUDY"];
 
-function PanZoomContainFrame({
+export function PanZoomContainFrame({
   src,
   label,
   metaText = "",
@@ -1017,6 +1017,21 @@ export default function PreviewPage() {
     }
   };
 
+  const handleOpenMaintenanceRecord = () => {
+    if (!transformerId) {
+      alert("Transformer details are missing. Please reopen the inspection from the transformers list.");
+      return;
+    }
+
+    const state = {
+      transformerId,
+      inspectionId,
+      maintenanceImageId: comparisonSources.current?.id ?? null,
+    };
+
+    navigate("/maintenance-records/new", { state });
+  };
+
   return (
     <div className="page-bg min-vh-100">
       <div className="topbar">
@@ -1175,6 +1190,17 @@ export default function PreviewPage() {
                       >
                         <i className="bi bi-plus-circle me-1"></i>
                         <span>Add Maintenance</span>
+                      </Button>
+
+                      <Button
+                        variant="outline-success"
+                        size="sm"
+                        onClick={handleOpenMaintenanceRecord}
+                        className="preview-action-button btn align-items-center"
+                        title="Generate or update the maintenance record"
+                      >
+                        <i className="bi bi-file-earmark-text me-1"></i>
+                        <span>Generate Record</span>
                       </Button>
                     </div>
 
