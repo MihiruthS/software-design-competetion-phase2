@@ -45,6 +45,16 @@ public interface ImageRepository extends JpaRepository<Image, Integer> {
     List<Image> findByTransformerIdAndImageType(Integer transformerId, Image.ImageType imageType);
 
     /**
+     * Find latest image by transformer and type (ordered by upload date)
+     */
+    Image findTopByTransformer_IdAndImageTypeOrderByUploadDateDesc(Integer transformerId, Image.ImageType imageType);
+
+    /**
+     * Find latest image by inspection and type (ordered by upload date)
+     */
+    Image findTopByInspection_IdAndImageTypeOrderByUploadDateDesc(Integer inspectionId, Image.ImageType imageType);
+
+    /**
      * Count images for a transformer
      */
     @Query("SELECT COUNT(i) FROM Image i WHERE i.transformer.id = :transformerId")

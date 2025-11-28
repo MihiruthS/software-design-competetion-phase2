@@ -1,0 +1,107 @@
+.maintenance-record-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.maintenance-record-page .record-card {
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.maintenance-record-page .section-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.maintenance-record-page .meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.maintenance-record-page .meta-item {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  border: 1px solid #e2e8f0;
+}
+
+.maintenance-record-page .meta-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 0.25rem;
+}
+
+.maintenance-record-page .meta-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.maintenance-record-page .actions-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.maintenance-record-page .history-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.maintenance-record-page .engineer-section {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 1.5rem;
+}
+
+.maintenance-record-page .engineer-section .form-label {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.maintenance-record-page .anomaly-notes {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.maintenance-record-page .print-hint {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+@media print {
+  body {
+    background: #ffffff !important;
+  }
+
+  .maintenance-record-page .actions-bar,
+  .sidebar,
+  nav,
+  button,
+  .print-hidden {
+    display: none !important;
+  }
+
+  .maintenance-record-page {
+    gap: 1rem;
+  }
+
+  .maintenance-record-page .record-card,
+  .maintenance-record-page .engineer-section {
+    box-shadow: none;
+    border: 1px solid #e2e8f0;
+  }
+
+  .maintenance-record-page .history-table {
+    page-break-before: always;
+  }
+}

@@ -7,6 +7,7 @@ import SettingsPage from "./pages/settingsPage";
 import UploadPage from './pages/uploadPage';
 import PreviewPage from './pages/previewPage';
 import ImageViewer from './pages/ImageViewer';
+import MaintenanceRecordPage from "./pages/MaintenanceRecordPage";
 import './styles/annotations.css';
 
 export default function App() {
@@ -21,6 +22,8 @@ export default function App() {
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/preview" element={<PreviewPage />} />
           <Route path="/image-viewer/:imageId" element={<ImageViewer />} />
+          <Route path="/maintenance-records/new" element={<MaintenanceRecordPage />} />
+          <Route path="/maintenance-records/:recordId" element={<MaintenanceRecordPage />} />
         </Route>
       </Routes>
     </Router>
